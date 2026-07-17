@@ -10,17 +10,81 @@ or when the installer complains about a missing **Java** runtime.
 
 This isn't a Minecraft bug — it's package metadata that hasn't kept up with Ubuntu's library renames. The launcher itself runs fine once the `.deb` installs.
 
-## TL;DR
+---
+
+## Easy step-by-step guide (never used Linux before? start here)
+
+No experience needed. Just follow these steps in order. You'll copy some text, paste it, and press Enter. That's it.
+
+### Step 1 — Download Minecraft
+
+1. Open your web browser and go to **<https://www.minecraft.net/download>**.
+2. Find the button for **Debian / Ubuntu** and click it to download.
+3. The file (called **`Minecraft.deb`**) will save into your **Downloads** folder. You don't need to open it — just remember it's there.
+
+### Step 2 — Open the Terminal
+
+The Terminal is a window where you type commands. To open it:
+
+- Press the **`Ctrl`** + **`Alt`** + **`T`** keys at the same time.
+
+A black or dark window will appear with a blinking cursor. This is where you'll paste the commands below.
+
+> 💡 **Tip:** In the Terminal, **Ctrl+C / Ctrl+V don't paste** like normal. To paste, use **`Ctrl` + `Shift` + `V`**, or just **right-click** and choose *Paste*.
+
+### Step 3 — Download the helper and run it
+
+Copy the whole block below, paste it into the Terminal, and press **Enter**:
+
+```bash
+cd ~/Downloads
+wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/main/install-minecraft.sh
+chmod +x install-minecraft.sh
+./install-minecraft.sh
+```
+
+Here's what each line does, in plain English:
+
+| Line | What it means |
+|------|---------------|
+| `cd ~/Downloads` | Go to your Downloads folder (where Minecraft was saved). |
+| `wget …install-minecraft.sh` | Download this helper script from the internet. |
+| `chmod +x install-minecraft.sh` | Give the script permission to run (make it "executable"). |
+| `./install-minecraft.sh` | Run it. It does the rest for you. |
+
+### Step 4 — Type your password when asked
+
+The script needs permission to install software, so it will ask for **your password** (the one you use to log in to the computer).
+
+> ⚠️ **Important:** When you type your password in the Terminal, **nothing appears on screen** — no dots, no stars, nothing. That's normal and on purpose. Just type it and press **Enter**.
+
+Then wait a minute while it works. When it's done you'll see a green **`Done.`** message.
+
+### Step 5 — Play!
+
+Click your apps menu (the grid of icons, usually bottom-left or by pressing the **Super/Windows key**), type **`Minecraft`**, and click the icon.
+
+The first time, Minecraft will ask you to sign in with your **Microsoft account** — that's the normal Minecraft login, not part of this fix.
+
+**That's it. Have fun!** 🎮
+
+If something goes wrong, see [Troubleshooting](#troubleshooting) near the bottom.
+
+---
+
+## Quick version (comfortable with a terminal)
 
 ```bash
 # 1. Download the Debian/Ubuntu launcher from https://www.minecraft.net/download
 #    (usually lands in ~/Downloads/Minecraft.deb)
 
-# 2. Run the script
+# 2. Grab and run the script
+cd ~/Downloads
+wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/main/install-minecraft.sh
 chmod +x install-minecraft.sh
 ./install-minecraft.sh              # uses ~/Downloads/Minecraft.deb
 # or point it at the file:
-./install-minecraft.sh ~/Downloads/Minecraft.deb
+./install-minecraft.sh /path/to/Minecraft.deb
 ```
 
 Then launch from your app menu, or run `minecraft-launcher`.
@@ -61,6 +125,37 @@ dpkg-deb -b /tmp/mc ~/Downloads/Minecraft-fixed.deb
 
 # Install (apt resolves the rest via Provides)
 sudo apt-get install -y ~/Downloads/Minecraft-fixed.deb
+```
+
+## Troubleshooting
+
+**"`wget: command not found`"**
+Your system doesn't have `wget`. Install it first, then retry Step 3:
+```bash
+sudo apt-get install -y wget
+```
+(Or swap `wget <url>` for `curl -LO <url>` — most systems have one or the other.)
+
+**"Minecraft .deb not found"**
+The script looks in your Downloads folder for a file named exactly `Minecraft.deb`. Make sure Step 1 finished and the file is really in **Downloads**. If it downloaded with a different name (e.g. `Minecraft(1).deb`), tell the script where it is:
+```bash
+./install-minecraft.sh ~/Downloads/"Minecraft(1).deb"
+```
+
+**"Permission denied" when running `./install-minecraft.sh`**
+You skipped the `chmod +x` line. Run it, then try again:
+```bash
+chmod +x install-minecraft.sh
+./install-minecraft.sh
+```
+
+**It asks for a password but won't accept it**
+Remember: typing shows nothing on screen (no dots). Type carefully and press Enter. Use the same password you log in to the computer with.
+
+**Anything else**
+Copy the red `ERR` message and open an issue (see below) — include your Ubuntu version, which you can get with:
+```bash
+cat /etc/os-release
 ```
 
 ## Contributing
