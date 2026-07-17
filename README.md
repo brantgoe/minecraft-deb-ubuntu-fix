@@ -42,7 +42,7 @@ Copy the whole block below, paste it into the Terminal, and press **Enter**:
 
 ```bash
 cd ~/Downloads
-wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/main/install-minecraft.sh
+wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/v1.0.0/install-minecraft.sh
 chmod +x install-minecraft.sh
 ./install-minecraft.sh
 ```
@@ -84,7 +84,7 @@ If something goes wrong, see [Troubleshooting](#troubleshooting) near the bottom
 
 # 2. Grab and run the script
 cd ~/Downloads
-wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/main/install-minecraft.sh
+wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/v1.0.0/install-minecraft.sh
 chmod +x install-minecraft.sh
 ./install-minecraft.sh              # uses ~/Downloads/Minecraft.deb
 # or point it at the file:

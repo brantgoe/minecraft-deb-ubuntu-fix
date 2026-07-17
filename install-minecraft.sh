@@ -54,6 +54,15 @@ DEB="${1:-$HOME/Downloads/Minecraft.deb}"
     ./install-minecraft.sh ~/Downloads/Minecraft.deb"
 DEB="$(readlink -f "$DEB")"
 
+# Sanity-check that this really is the Minecraft launcher package, so pointing
+# the script at the wrong .deb fails clearly instead of installing something else.
+PKG_NAME="$(dpkg-deb -f "$DEB" Package 2>/dev/null || true)"
+if [[ "$PKG_NAME" != "minecraft-launcher" ]]; then
+    die "That .deb is '${PKG_NAME:-unknown}', not the Minecraft launcher.
+    Download the Debian/Ubuntu edition from https://www.minecraft.net/download
+    and pass its path, e.g.  ./install-minecraft.sh ~/Downloads/Minecraft.deb"
+fi
+
 # Escape a package name for use inside a POSIX ERE / sed pattern (dots, plus).
 ere_escape() { sed -E 's/[.[\*+?(){}|^$]/\\&/g' <<<"$1"; }
 
@@ -152,6 +161,16 @@ else
     dpkg-deb -b "$EXTRACT" "$INSTALL_DEB" >/dev/null 2>&1
     ok "built patched package"
 fi
+
+# --- Safety net: confirm nothing is still unmet before touching the system ---
+log "Confirming dependencies resolve"
+REMAIN="$(unsatisfiable_deps "$INSTALL_DEB")"
+if [[ -n "$REMAIN" ]]; then
+    die "Dependencies still unmet after patching: $(echo "$REMAIN" | tr '\n' ' ')
+    This is unexpected — nothing was installed. Please open an issue with your
+    Ubuntu version (cat /etc/os-release) and the output above."
+fi
+ok "all dependencies resolve — safe to install"
 
 # --- 4/4 Install --------------------------------------------------------
 log "4/4 Installing launcher"
