@@ -10,6 +10,10 @@ or when the installer complains about a missing **Java** runtime.
 
 This isn't a Minecraft bug — it's package metadata that hasn't kept up with Ubuntu's library renames. The launcher itself runs fine once the `.deb` installs.
 
+![Terminal showing install-minecraft.sh finishing successfully: Java found, the libgdk-pixbuf dependency rewritten, the package repacked and installed, ending with "Done."](docs/screenshot.svg)
+
+<sub>☝️ What a successful run looks like — a few green <code>OK</code> lines and a <code>Done.</code> at the end.</sub>
+
 ---
 
 ## Easy step-by-step guide (never used Linux before? start here)
