@@ -42,7 +42,7 @@ Copy the whole block below, paste it into the Terminal, and press **Enter**:
 
 ```bash
 cd ~/Downloads
-wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/v1.0.0/install-minecraft.sh
+wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/v1.0.1/install-minecraft.sh
 chmod +x install-minecraft.sh
 ./install-minecraft.sh
 ```
@@ -84,7 +84,7 @@ If something goes wrong, see [Troubleshooting](#troubleshooting) near the bottom
 
 # 2. Grab and run the script
 cd ~/Downloads
-wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/v1.0.0/install-minecraft.sh
+wget https://raw.githubusercontent.com/brantgoe/minecraft-deb-ubuntu-fix/v1.0.1/install-minecraft.sh
 chmod +x install-minecraft.sh
 ./install-minecraft.sh              # uses ~/Downloads/Minecraft.deb
 # or point it at the file:
@@ -155,6 +155,12 @@ chmod +x install-minecraft.sh
 
 **It asks for a password but won't accept it**
 Remember: typing shows nothing on screen (no dots). Type carefully and press Enter. Use the same password you log in to the computer with.
+
+**It stops after "`=== Confirming dependencies resolve ===`" and nothing happens**
+This was a bug in v1.0.0 of the script: on systems where the repair *succeeded*, it
+silently quit at this step instead of continuing to the install. Nothing was changed
+on your system. Close that terminal window, re-download the script (Step 3 — it now
+fetches the fixed v1.0.1), and run it again.
 
 **Anything else**
 Copy the red `ERR` message and open an issue (see below) — include your Ubuntu version, which you can get with:

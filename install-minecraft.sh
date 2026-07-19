@@ -93,11 +93,14 @@ find_replacement() {
 }
 
 # List deps apt reports as "not installable" for a given .deb (simulated).
+# `|| true`: under pipefail an empty grep (no bad deps — the success case) or
+# apt's nonzero exit on an unsatisfiable set would otherwise abort via set -e.
 unsatisfiable_deps() {
     apt-get install -s "$1" 2>&1 \
         | grep -iE 'Depends:.*not installable' \
         | sed -E 's/.*Depends:[[:space:]]*([^ ]+).*/\1/' \
-        | sort -u
+        | sort -u \
+        || true
 }
 
 # --- keep sudo warm -----------------------------------------------------
